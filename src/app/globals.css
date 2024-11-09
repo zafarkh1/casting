@@ -3,19 +3,81 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #131313;
+  --foreground: #e7e7e7;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.myContainer {
+  @apply container mx-auto;
+}
+
+.heading1 {
+  @apply xl:text-[84px] md:text-[54px] text-[28px] font-semibold xl:leading-[100px] md:leading-[70px] leading-[45px] uppercase;
+}
+
+.heading2 {
+  @apply xl:text-5xl md:text-4xl text-[28px] xl:leading-[63px] md:leading-10 leading-9 uppercase;
+}
+
+.heading3 {
+  @apply xl:text-3xl text-2xl;
+}
+
+.heading5 {
+  @apply lg:text-3xl text-lg;
+}
+
+.heading6 {
+  @apply lg:text-2xl text-lg;
+}
+
+.text {
+  @apply xl:text-lg text-base;
+}
+
+.smtext {
+  @apply xl:text-lg md:text-base text-xs;
+}
+
+.flexBetween {
+  @apply flex items-center justify-between;
+}
+
+.flexCenter {
+  @apply flex items-center justify-center;
+}
+
+.flexICenter {
+  @apply flex items-center;
+}
+
+.myBtn {
+  @apply py-2 lg:px-7 px-4 rounded-full border border-[var(--foreground)] lg:text-lg uppercase;
+}
+
+.catalogueBtn {
+  @apply py-2 lg:px-7 px-4 rounded-full lg:text-lg uppercase;
+}
+
+.image-responsive {
+  @apply h-[34px] md:h-[65px] xl:h-[103px] xl:w-72 md:w-40 w-16;
+  vertical-align: text-bottom;
+}
+
+.partnerCard {
+  backdrop-filter: blur(86px);
+  box-shadow: 0px 4px 4px 0px #ffffff26 inset;
+  box-shadow: 0px 0px 68px 0px #ffffff0d inset;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
