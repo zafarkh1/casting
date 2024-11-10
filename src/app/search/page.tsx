@@ -8,7 +8,7 @@ function page() {
         поиск актеров
       </h1>
       <Search />
-      <Contact />
+      <Contact heading="СВЯЗАТЬСЯ С НАМИ" />
     </div>
   );
 }

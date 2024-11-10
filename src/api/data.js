@@ -7,7 +7,7 @@ export const actors = [
     lives: "New York, USA",
     playingAge: { min: 25, max: 30 },
     about:
-      "Autumn is a dedicated psychiatric technician with experience in supporting mental health patients in a variety of settings and roles.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_1.png",
     job: "Psychiatric technician",
     category: "filmActors",
@@ -20,7 +20,7 @@ export const actors = [
     lives: "Chicago, USA",
     playingAge: { min: 30, max: 35 },
     about:
-      "Chris is an experienced power lineman, known for his attention to detail and commitment to maintaining energy systems safely.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_3.png",
     job: "Power lineman",
     category: "seriesActors",
@@ -29,11 +29,11 @@ export const actors = [
     id: "3",
     firstName: "Kimberly",
     lastName: "Mastran",
-    gender: "male",
+    gender: "female",
     lives: "Los Angeles, USA",
     playingAge: { min: 28, max: 33 },
     about:
-      "Kimberly has worked as a journalist covering social issues and human interest stories with empathy and insight.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_2.png",
     job: "Journalist",
     category: "voiceActors",
@@ -46,7 +46,7 @@ export const actors = [
     lives: "Austin, USA",
     playingAge: { min: 26, max: 31 },
     about:
-      "Frances specializes in diesel engine maintenance and repair, known for her expertise and technical knowledge in the field.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_4.png",
     job: "Diesel engine specialist",
     category: "voiceActors",
@@ -59,7 +59,7 @@ export const actors = [
     lives: "Seattle, USA",
     playingAge: { min: 24, max: 29 },
     about:
-      "Jake is a skilled firefighter, devoted to his work and recognized for his bravery in emergency situations.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_5.png",
     job: "Firefighter",
     category: "seriesActors",
@@ -72,7 +72,7 @@ export const actors = [
     lives: "London, UK",
     playingAge: { min: 22, max: 27 },
     about:
-      "Ella is a model with an international portfolio, noted for her versatility in commercial and high-fashion projects.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_6.png",
     job: "Model",
     category: "seriesActors",
@@ -85,7 +85,7 @@ export const actors = [
     lives: "Toronto, Canada",
     playingAge: { min: 35, max: 40 },
     about:
-      "Nathan is a seasoned actor known for his strong roles in drama series and passion for complex characters.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_7.png",
     job: "Actor",
     category: "filmActors",
@@ -98,7 +98,7 @@ export const actors = [
     lives: "Sydney, Australia",
     playingAge: { min: 29, max: 34 },
     about:
-      "Lily is a voice-over artist with a wide 'r'ange of styles, from animation characters to commercial projects.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_8.png",
     job: "Voice-over artist",
     category: "voiceActors",
@@ -111,7 +111,7 @@ export const actors = [
     lives: "Vancouver, Canada",
     playingAge: { min: 32, max: 37 },
     about:
-      "Tom is an accomplished stage actor known for his dedication to the craft and powerful performances.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_6.png",
     job: "Stage actor",
     category: "filmActors",
@@ -124,7 +124,7 @@ export const actors = [
     lives: "Madrid, 'S'pain",
     playingAge: { min: 23, max: 28 },
     about:
-      "Sophia is a budding actress in Spanish cinema, recognized for her natural talent and expressive performances.",
+      "Acting has always been my favorite way of escaping from the harshness & toughness of this world, I love hiding behind my characters, I feel a lot safer and more confident on set, surrounded by people who understand my urge to be different.",
     image: "/assets/actors/actor_2.png",
     job: "Actress",
     category: "filmActors",

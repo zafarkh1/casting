@@ -34,6 +34,11 @@ function Catalogue() {
     { label: "Актеры сериалов", value: "seriesActors" },
   ];
 
+  useEffect(() => {
+    setGender("all");
+    setActorType("all");
+  }, []);
+
   return (
     <section className="pt-6">
       <h2 className="heading2">каталог актеров</h2>

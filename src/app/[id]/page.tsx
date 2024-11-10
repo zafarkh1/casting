@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { actors } from "@/api/data";
 import ActorInfo from "@/components/sections/DetailActor/ActorInfo";
+import AccordionInfo from "@/components/sections/DetailActor/AccordionInfo";
+import Contact from "@/components/sections/Home/Contact";
 
 // Define the Actor type if it's not already defined
 type Actor = {
@@ -31,6 +33,8 @@ const Detail = () => {
   return (
     <div className="myContainer">
       <ActorInfo actor={actor} />
+      <AccordionInfo />
+      <Contact heading="УЗНАТЬ КОНТАКТЫ" />
     </div>
   );
 };

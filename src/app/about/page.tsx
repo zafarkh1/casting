@@ -11,7 +11,7 @@ function page() {
       <Information />
       <Partners />
       <Price />
-      <Contact />
+      <Contact heading="СВЯЗАТЬСЯ С НАМИ" />
     </div>
   );
 }

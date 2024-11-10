@@ -9,7 +9,7 @@ export default function Home() {
       <Showcase />
       <Info />
       <Catalogue />
-      <Contact />
+      <Contact heading="СВЯЗАТЬСЯ С НАМИ" />
     </div>
   );
 }

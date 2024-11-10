@@ -40,19 +40,19 @@ const buttons = [
   {
     id: 1,
     name: "Поиск актера",
-    href: "/",
+    href: "/search",
     icon: <IconSearch className="size-3 fill-white" />,
   },
   {
     id: 2,
     name: "Заполнить анкету",
-    href: "/",
+    href: "/form",
     icon: <IconArrowTopRight className="size-3 fill-white" />,
   },
   {
     id: 3,
     name: "Вход/регистрация",
-    href: "/",
+    href: "/login",
     icon: <IconUser className="size-3 fill-white" />,
   },
 ];
@@ -107,16 +107,20 @@ function Footer() {
         </div>
 
         {/*    Buttons     */}
-        <nav className="xl:col-span-1 col-span-2 xl:col-start-4 xl:space-y-5 space-y-4 py-10 border-t lg:border-t-0 border-t-[#FFFFFF1A]">
+        <nav className="xl:col-span-1 col-span-2 xl:col-start-4 xl:space-y-5 space-y-4 lg:py-0 py-10 border-t lg:border-t-0 border-t-[#FFFFFF1A]">
           {buttons.map((item) => (
-            <Button key={item.id} className="flexCenter gap-3 group myBtn">
+            <Link
+              key={item.id}
+              href={item.href}
+              className="flexCenter gap-3 myBtn"
+            >
               <span>{item.name}</span>
               {item.icon && (
-                <span className="bg-primary rounded-full p-[6px] transition-opacity duration-300 group-hover:opacity-0">
+                <span className="bg-primary rounded-full p-[6px]">
                   {item.icon}
                 </span>
               )}
-            </Button>
+            </Link>
           ))}
         </nav>
       </div>

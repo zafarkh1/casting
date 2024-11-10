@@ -9,32 +9,10 @@ import {
   IconSearch,
   IconUser,
 } from "./icons/icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineMenu } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
-
-const items = [
-  {
-    id: 1,
-    name: "Поиск актера",
-    href: "/search",
-    icon: <IconSearch className="size-3 fill-white group-hover:fill-primary" />,
-  },
-  {
-    id: 2,
-    name: "Заполнить анкету",
-    href: "/",
-    icon: (
-      <IconArrowTopRight className="size-3 fill-white group-hover:fill-primary" />
-    ),
-  },
-  {
-    id: 3,
-    name: "Вход/регистрация",
-    href: "/",
-    icon: <IconUser className="size-3 fill-white group-hover:fill-primary" />,
-  },
-];
+import { usePathname } from "next/navigation";
 
 const links = [
   { id: 1, title: "Главная", href: "/" },
@@ -45,6 +23,7 @@ const links = [
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +32,45 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const items = [
+    {
+      id: 1,
+      name: "Поиск актера",
+      href: "/search",
+      icon: (
+        <IconSearch
+          className={`size-3 fill-white ${
+            pathname === "/search" ? "size-5" : ""
+          }`}
+        />
+      ),
+    },
+    {
+      id: 2,
+      name: "Заполнить анкету",
+      href: "/form",
+      icon: (
+        <IconArrowTopRight
+          className={`size-3 fill-white ${
+            pathname === "/form" ? "size-5" : ""
+          }`}
+        />
+      ),
+    },
+    {
+      id: 3,
+      name: "Вход/регистрация",
+      href: "/login",
+      icon: (
+        <IconUser
+          className={`size-3 fill-white ${
+            pathname === "/login" ? "size-5" : ""
+          }`}
+        />
+      ),
+    },
+  ];
 
   return (
     <header
@@ -137,10 +155,18 @@ function Header() {
           <div className="lg:hidden mt-auto flex flex-col gap-3">
             {items.map((item) => (
               <Link key={item.id} href={item.href}>
-                <Button key={item.id} className="flexCenter gap-3 group myBtn">
+                <Button
+                  className={`flexCenter gap-3 group myBtn ${
+                    pathname === item.href ? "bg-primary border-none" : ""
+                  }`}
+                >
                   <span>{item.name}</span>
                   {item.icon && (
-                    <span className="bg-primary rounded-full p-[6px] transition-opacity duration-300 group-hover:opacity-0">
+                    <span
+                      className={`rounded-full p-[5px] ${
+                        pathname === item.href ? "" : "bg-primary"
+                      }`}
+                    >
                       {item.icon}
                     </span>
                   )}
@@ -154,10 +180,18 @@ function Header() {
         <div className="hidden lg:flex gap-3">
           {items.map((item) => (
             <Link key={item.id} href={item.href}>
-              <Button className="flexCenter gap-3 myBtn hover:bg-primary hover:border-0 group">
+              <Button
+                className={`flexCenter gap-3 group myBtn ${
+                  pathname === item.href ? "bg-primary border-none" : ""
+                }`}
+              >
                 <span>{item.name}</span>
                 {item.icon && (
-                  <span className="bg-primary group-hover:bg-white group-hover:text-primary rounded-full p-[6px]">
+                  <span
+                    className={`rounded-full p-[5px] ${
+                      pathname === item.href ? "" : "bg-primary"
+                    }`}
+                  >
                     {item.icon}
                   </span>
                 )}

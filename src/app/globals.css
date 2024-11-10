@@ -58,7 +58,7 @@ body {
 }
 
 .myBtn {
-  @apply py-2 lg:px-7 px-4 rounded-full border border-[var(--foreground)] lg:text-lg uppercase;
+  @apply py-2 lg:px-7 px-4 rounded-full border border-secondary lg:text-lg uppercase;
 }
 
 .catalogueBtn {
@@ -80,4 +80,11 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.infoBg {
+  background-image: url("/assets/info/info_bg_4.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
