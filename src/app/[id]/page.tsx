@@ -34,7 +34,6 @@ const Detail = () => {
     <div className="myContainer">
       <ActorInfo actor={actor} />
       <AccordionInfo />
-      <Contact heading="УЗНАТЬ КОНТАКТЫ" />
     </div>
   );
 };

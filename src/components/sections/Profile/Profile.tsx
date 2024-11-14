@@ -4,10 +4,12 @@ import Button from "@/components/Button";
 import { IconArrowTopRight } from "@/components/icons/icons";
 import { useEffect, useState } from "react";
 import CreateForm from "./CreateForm";
+import { usePathname } from "next/navigation";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<string>("form");
   const [createForm, setCreateForm] = useState<boolean>(false);
+  const pathname = usePathname();
 
   const handleDeleteAccount = () => {
     localStorage.removeItem("registeredPhones");
@@ -95,12 +97,21 @@ const Profile = () => {
       {activeTab === "form" && createForm && (
         <>
           <CreateForm />
-          <p
-            className="text uppercase underline lg:col-span-1 lg:col-start-4 text-center py-6 border-b border-b-[#FFFFFF1A] 
-          cursor-pointer hover:text-primary transition-all duration-300"
-          >
-            уДАЛИТЬ анкету
-          </p>
+
+          <div className="py-6 border-b border-b-[#FFFFFF1A] flex items-center justify-end lg:gap-6 gap-3">
+            <p
+              className="text uppercase underline 
+            cursor-pointer hover:text-primary transition-all duration-300"
+            >
+              уДАЛИТЬ анкету
+            </p>
+            <Button
+              className="myBtn bg-primary border-none hover:bg-primaryHover transition-all duration-300"
+              onClick={() => setCreateForm(true)}
+            >
+              <span>Сохранить</span>
+            </Button>
+          </div>
         </>
       )}
     </section>

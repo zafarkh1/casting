@@ -47,8 +47,7 @@ function Price() {
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
               }}
-              className={`relative h-[208px] w-full flex flex-col justify-between px-4 py-6 rounded-2xl cursor-pointer 
-                lg:hover:scale-105 transition-all duration-300`}
+              className={`relative h-[208px] w-full flex flex-col justify-between px-4 py-6 rounded-2xl cursor-pointer`}
             >
               <h4 className="text-2xl w-3/5">{item.title}</h4>
               {item.img && (

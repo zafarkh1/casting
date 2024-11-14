@@ -119,6 +119,32 @@ const GeneralFill = () => {
             </div>
           </div>
 
+          {/* Living Place */}
+          <div className="w-screen">
+            <h3 className="heading6">Место проживания:</h3>
+            <div className="mt-4">
+              <input
+                type="text"
+                className="catalogueBtn border border-[#333] bg-transparent appearance-none w-fit"
+                placeholder="Место проживания"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="lg:mt-10 lg:mb-7 my-3 grid md:grid-cols-2 grid-cols-1 lg:gap-7 gap-4 lg:pr-4">
+          {/* Phone number */}
+          <div className="">
+            <h3 className="heading6">Номер телефона:</h3>
+            <div className="mt-4">
+              <input
+                type="text"
+                className="catalogueBtn border border-[#333] bg-transparent appearance-none"
+                placeholder="Номер телефона"
+              />
+            </div>
+          </div>
+
           {/* Physical Features */}
           <div>
             <h3 className="heading6">Физические особенности:</h3>
@@ -129,7 +155,7 @@ const GeneralFill = () => {
                   ref={select1}
                   name=""
                   id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  className="catalogueBtn border border-[#333] bg-transparent pr-8 appearance-none cursor-pointer w-full"
                 >
                   <option value="0" className="bg-[#333] py-2">
                     спортивная
@@ -157,13 +183,13 @@ const GeneralFill = () => {
 
         <div className="lg:mt-10 lg:mb-7 my-3 grid grid-cols-1 lg:gap-7 gap-4 lg:pr-4">
           {/* Living Place */}
-          <div className="w-screen">
-            <h3 className="heading6">Место проживания:</h3>
+          <div className="">
+            <h3 className="heading6">Электронный адрес:</h3>
             <div className="mt-4">
               <input
-                type="text"
+                type="email"
                 className="catalogueBtn border border-[#333] bg-transparent appearance-none"
-                placeholder="Место проживания"
+                placeholder="Электронный адрес"
               />
             </div>
           </div>

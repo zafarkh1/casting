@@ -13,7 +13,7 @@ const PhotosInfo = () => {
   const { openSection, toggleSection } = useSectionStore();
 
   return (
-    <div className="border-b border-b-[#FFFFFF1A] py-3 cursor-pointer">
+    <div className="py-3 cursor-pointer">
       <div className="flexBetween" onClick={() => toggleSection("Фотографии")}>
         <h3
           className={`heading3 text-secondary transitionAcc ${
