@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { IconArrowTopRight } from "@/components/icons/icons";
 import Link from "next/link";
-import { useState } from "react";
 
 const items = [
   {
@@ -30,27 +30,51 @@ const items = [
 
 function Info() {
   const [hoveredItemId, setHoveredItemId] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
   return (
     <section className="lg:py-32 pt-20 pb-12 border-b border-y-[#FFFFFF1A]">
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-16 gap-24">
         {items.map((item) => (
           <Link key={item.id} href={item.link}>
             <div
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundImage = `url("/assets/info/info_bg_hover.png")`;
-                setHoveredItemId(item.id);
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundImage = `url(${item.bg})`;
-                setHoveredItemId(0);
-              }}
+              onMouseEnter={
+                !isMobile
+                  ? (e) => {
+                      e.currentTarget.style.backgroundImage = `url("/assets/info/info_bg_hover.png")`;
+                      setHoveredItemId(item.id);
+                    }
+                  : undefined
+              }
+              onMouseLeave={
+                !isMobile
+                  ? (e) => {
+                      e.currentTarget.style.backgroundImage = `url(${item.bg})`;
+                      setHoveredItemId(0);
+                    }
+                  : undefined
+              }
               style={{
                 backgroundImage: `url(${item.bg})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
               }}
-              className="relative h-[295px] flex flex-col items-start justify-end px-5 py-8 hover:py-14 lg:hover:scale-105
+              className="relative h-[295px] flex flex-col items-start justify-end px-5 py-8 lg:hover:py-14 lg:hover:scale-105
               transition-all duration-500 group"
             >
               <img
@@ -58,12 +82,23 @@ function Info() {
                 alt={item.title}
                 className="absolute right-5 -top-24 mb-auto transform lg:group-hover:rotate-[25deg] transition-all duration-700"
               />
-              <h3 className="heading3 uppercase w-3/4 transition-all duration-700">
-                {hoveredItemId === item.id ? "ПЕРЕЙТИ" : item.title}
+              <h3
+                className={`heading3 uppercase w-3/4 transition-opacity duration-500 ${
+                  hoveredItemId === item.id ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                {item.title}
+              </h3>
+              <h3
+                className={`heading3 uppercase w-3/4 transition-opacity duration-500 ${
+                  hoveredItemId === item.id ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                ПЕРЕЙТИ
               </h3>
               <span
-                className="absolute right-5 bottom-9 w-10 h-10 group-hover:bg-white 
-                group-hover:rounded-full group-hover:w-20 group-hover:h-20 group-hover:p-5 transition-all duration-500"
+                className="absolute right-5 bottom-9 w-10 h-10 lg:group-hover:bg-white 
+                lg:group-hover:rounded-full lg:group-hover:w-20 lg:group-hover:h-20 lg:group-hover:p-5 transition-all duration-500"
               >
                 <IconArrowTopRight className="fill-primary " />
               </span>

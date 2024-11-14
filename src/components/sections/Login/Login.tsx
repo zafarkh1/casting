@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { IconArrowTopRight } from "@/components/icons/icons";
 
@@ -21,7 +21,6 @@ const Login = () => {
     }
 
     if (value.length <= 16) {
-      // Limit to exact length for format
       setPhone(value.trimEnd());
     }
   };
@@ -54,6 +53,14 @@ const Login = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+
+    if (loggedInUser) {
+      window.location.href = "/profile";
+    }
+  }, [window.location.href]);
 
   return (
     <section className="lg:mt-24 mt-20 pt-10 pb-20 border-t border-t-[#FFFFFF1A]">

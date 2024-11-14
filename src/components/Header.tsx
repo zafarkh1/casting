@@ -12,18 +12,25 @@ import {
 import { useEffect, useState } from "react";
 import { MdOutlineMenu } from "react-icons/md";
 import { FaTimes } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useLoginModalStore } from "./utils/zustand/useLoginModalStore";
+import LoginModal from "./sections/Form/LoginModal";
 
 const links = [
   { id: 1, title: "Главная", href: "/" },
-  { id: 2, title: "О компаний", href: "/" },
+  { id: 2, title: "О компаний", href: "/about" },
   { id: 3, title: "ру / узб", href: "/" },
 ];
 
 function Header() {
+  const { isOpen, onOpen, onClose } = useLoginModalStore();
+  const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  console.log(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +39,22 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close menu on pathname change (indicating navigation)
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    console.log(loggedInUser, "loggedInUser");
+
+    if (loggedInUser === null && pathname === "/form") {
+      setShowLoginModal(true);
+    }
+  }, [onOpen, showLoginModal, pathname]);
+
+  console.log(showLoginModal);
 
   const items = [
     {
@@ -107,6 +130,13 @@ function Header() {
             className="fixed inset-0 bg-[#00000099] z-40"
             onClick={() => setOpen(false)}
           />
+        )}
+
+        {showLoginModal && (
+          <>
+            <LoginModal />
+            <div className="fixed inset-0 bg-[#00000099] z-40" />
+          </>
         )}
 
         {/* Links and Buttons */}

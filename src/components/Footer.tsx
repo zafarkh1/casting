@@ -1,6 +1,5 @@
 import { IconArrowTopRight, IconSearch, IconUser } from "./icons/icons";
 import Link from "next/link";
-import Button from "./Button";
 import Image from "next/image";
 
 const links = [
@@ -112,7 +111,7 @@ function Footer() {
             <Link
               key={item.id}
               href={item.href}
-              className="flexCenter gap-3 myBtn"
+              className="flexICenter gap-3 myBtn w-fit"
             >
               <span>{item.name}</span>
               {item.icon && (

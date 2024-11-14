@@ -52,12 +52,20 @@ export const IconArrowDown = (props: IconProps): JSX.Element => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
+    <path d="M6 9L12 15L18 9" stroke="#E7E7E7" />
+  </svg>
+);
+
+export const IconPhoto = (props: IconProps): JSX.Element => (
+  <svg
+    viewBox="0 0 24 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <path
-      d="M6 9L12 15L18 9"
-      stroke="#E7E7E7"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M12.7076 19.0382L11.2933 20.4525C9.34072 22.4051 6.1749 22.4051 4.22228 20.4525C2.26966 18.4998 2.26966 15.334 4.22228 13.3814L5.63649 11.9672M18.3644 13.3814L19.7786 11.9672C21.7312 10.0146 21.7312 6.84873 19.7786 4.89611C17.826 2.94348 14.6602 2.94349 12.7076 4.89611L11.2933 6.31032M8.50045 16.1743L15.5005 9.17426"
+      stroke="white"
     />
   </svg>
 );

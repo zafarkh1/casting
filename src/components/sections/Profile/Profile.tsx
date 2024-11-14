@@ -3,7 +3,7 @@
 import Button from "@/components/Button";
 import { IconArrowTopRight } from "@/components/icons/icons";
 import { useEffect, useState } from "react";
-import Filter from "../Search/Filter";
+import CreateForm from "./CreateForm";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<string>("form");
@@ -69,7 +69,7 @@ const Profile = () => {
         </p>
 
         <Button
-          className="flexCenter gap-3 myBtn hover:bg-primary hover:border-0 group lg:mx-0 mx-9 lg:col-span-2"
+          className="flexCenter gap-3 myBtn hover:bg-primary hover:border-primary group lg:mx-0 mx-9 lg:col-span-2"
           onClick={handleLogoutAccount}
         >
           <span>вЫЙТИ ИЗ АККАУНТА</span>
@@ -82,7 +82,7 @@ const Profile = () => {
       {/*    form    */}
       {activeTab === "form" && !createForm && (
         <Button
-          className="flexCenter gap-3 myBtn hover:bg-primary hover:border-0 group lg:mx-0 mx-9"
+          className="flexCenter gap-3 myBtn hover:bg-primary hover:border-primary group lg:mx-0 mx-9"
           onClick={() => setCreateForm(true)}
         >
           <span>СОЗДАТЬ АНКЕТУ</span>
@@ -94,7 +94,7 @@ const Profile = () => {
 
       {activeTab === "form" && createForm && (
         <>
-          <Filter />
+          <CreateForm />
           <p
             className="text uppercase underline lg:col-span-1 lg:col-start-4 text-center py-6 border-b border-b-[#FFFFFF1A] 
           cursor-pointer hover:text-primary transition-all duration-300"

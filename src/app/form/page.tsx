@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import FormFilter from "@/components/sections/Form/FormFilter";
 import FormInfo from "@/components/sections/Form/FormInfo";
 import Contact from "@/components/sections/Home/Contact";
-import { useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [isAgreed, setIsAgreed] = useState(false);
 
   return (
@@ -17,4 +17,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

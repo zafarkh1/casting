@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/icons/icons.tsx", "src/components/utils/zustand/usFilterCatalogue.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/icons/icons.tsx", "src/components/utils/zustand/usFilterCatalogue.js", "src/components/utils/zustand/useSectionInfoStore.js"],
   "exclude": ["node_modules"]
 }

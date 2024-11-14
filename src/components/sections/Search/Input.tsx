@@ -26,15 +26,15 @@ function Input({ setFilteredActors }: any) {
         value={searchItem}
         onChange={handleSearchFilter}
       />
-      <Button className="hidden lg:flex items-center gap-3 myBtn hover:bg-primary hover:border-0 group lg:col-span-2">
+      <Button className="hidden lg:flex items-center gap-3 myBtn lg:hover:bg-primary lg:hover:border-primary group lg:col-span-2 transition-all duration-500">
         <span>Поиск</span>
-        <span className="bg-primary group-hover:bg-white rounded-full p-[6px]">
-          <IconArrowTopRight className="size-4 fill-white group-hover:fill-primary" />
+        <span className="bg-primary rounded-full p-[6px]">
+          <IconArrowTopRight className="size-4 fill-white" />
         </span>
       </Button>
 
-      <span className="lg:hidden bg-primary group-hover:bg-white rounded-full p-[10px] lg:col-span-0 col-span-2 flexCenter">
-        <IconArrowTopRight className="size-5 fill-white group-hover:fill-primary" />
+      <span className="lg:hidden bg-primary rounded-full p-[10px] lg:col-span-0 col-span-2 flexCenter">
+        <IconArrowTopRight className="size-5 fill-white" />
       </span>
       <p className="underline text-secondary text-lg uppercase lg:col-span-3 col-span-12 hover:text-white cursor-pointer">
         сбросить фильтры
