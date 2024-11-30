@@ -1,6 +1,6 @@
 function Showcase() {
   return (
-    <section className="lg:mt-24 mt-20 py-10 border-y border-y-[#FFFFFF1A] border-b-0">
+    <section className="lg:mt-32 mt-20 py-10 border-y border-y-[#FFFFFF1A] border-b-0">
       <h1 className="heading1">
         Мы объединяем{" "}
         <img

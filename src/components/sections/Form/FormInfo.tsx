@@ -13,7 +13,7 @@ const FormInfo = ({ isAgreed, setIsAgreed }: FormInfoProps) => {
   };
 
   return (
-    <section className="flex lg:flex-row flex-col lg:justify-between lg:gap-12 gap-9 lg:mt-24 mt-20 pt-10 pb-20 border-y border-y-[#FFFFFF1A] border-b-0">
+    <section className="flex lg:flex-row flex-col lg:justify-between lg:gap-12 gap-9 lg:mt-32 mt-20 pt-10 pb-20 border-y border-y-[#FFFFFF1A] border-b-0">
       <h1 className="heading1 lg:w-[55%]">анкета для кандидата</h1>
       <div className="relative text lg:w-[45%] lg:my-3 flex flex-col justify-between gap-6">
         <p className="text-secondary">

@@ -5,10 +5,30 @@ import Button from "@/components/Button";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { actors } from "@/api/data";
+import { getActors } from "@/api/api";
 
 function Catalogue() {
   const { gender, actorType, setGender, setActorType } = useFilterCatalogue();
   const [filteredActors, setFilteredActors] = useState(actors);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { props } = await getActors();
+        setData(props.actors);
+      } catch (error) {
+        setError("Failed to fetch actors.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(data);
 
   useEffect(() => {
     const filtered = actors.filter((actor) => {
@@ -83,7 +103,7 @@ function Catalogue() {
         </div>
       </div>
 
-      <Card filteredActors={filteredActors} />
+      <Card filteredActors={filteredActors} data={data} />
     </section>
   );
 }

@@ -5,6 +5,9 @@ import { IconArrowTopRight } from "@/components/icons/icons";
 import { useEffect, useState } from "react";
 import CreateForm from "./CreateForm";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
+import { logout } from "@/components/utils/axios/axiosInstance";
+import { createApplicationForm } from "@/api/api";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<string>("form");
@@ -12,27 +15,39 @@ const Profile = () => {
   const pathname = usePathname();
 
   const handleDeleteAccount = () => {
-    localStorage.removeItem("registeredPhones");
+    logout();
     window.location.href = "/login";
     alert("Аккаунт удален!");
   };
 
   const handleLogoutAccount = () => {
-    localStorage.removeItem("loggedInUser");
+    logout();
     window.location.href = "/login";
     alert("Вы вышли из аккаунта!");
   };
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("loggedInUser");
+    const loggedInUser = Cookies.get("refresh_token_casting");
 
     if (!loggedInUser) {
       window.location.href = "/login";
     }
   }, [window.location.href]);
 
+  const handlePostForm = async () => {
+    try {
+      const response = await createApplicationForm();
+
+      if (response.status === 200) {
+        setCreateForm(true);
+      }
+    } catch (error) {
+      console.error("Error creating application form:", error);
+    }
+  };
+
   return (
-    <section className="lg:mt-24 mt-20 pt-10 pb-20 border-t border-t-[#FFFFFF1A]">
+    <section className="lg:mt-32 mt-20 pt-10 pb-20 border-t border-t-[#FFFFFF1A]">
       {/*    heading    */}
       <h1 className="heading1 mb-10">Личный кабинет</h1>
 
@@ -85,7 +100,7 @@ const Profile = () => {
       {activeTab === "form" && !createForm && (
         <Button
           className="flexCenter gap-3 myBtn hover:bg-primary hover:border-primary group lg:mx-0 mx-9"
-          onClick={() => setCreateForm(true)}
+          onClick={() => handlePostForm()}
         >
           <span>СОЗДАТЬ АНКЕТУ</span>
           <span className="bg-primary group-hover:bg-white group-hover:text-primary rounded-full p-[6px]">

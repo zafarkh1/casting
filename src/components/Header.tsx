@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import Button from "./Button";
-import Image from "next/image";
 import {
   IconArrowDown,
   IconArrowTopRight,
+  IconLogo,
+  IconMobileLogo,
   IconSearch,
   IconUser,
 } from "./icons/icons";
@@ -15,11 +16,11 @@ import { FaTimes } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import { useLoginModalStore } from "./utils/zustand/useLoginModalStore";
 import LoginModal from "./sections/Form/LoginModal";
+import Cookies from "js-cookie";
 
 const links = [
   { id: 1, title: "Главная", href: "/" },
   { id: 2, title: "О компаний", href: "/about" },
-  { id: 3, title: "ру / узб", href: "/" },
 ];
 
 function Header() {
@@ -29,6 +30,7 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const hasCookie = Cookies.get("refresh_token_casting");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,18 +47,17 @@ function Header() {
 
   // Check authentication status on mount
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    setIsAuthenticated(!!loggedInUser);
+    setIsAuthenticated(!!hasCookie);
 
     const handleStorageChange = () => {
-      setIsAuthenticated(!!localStorage.getItem("loggedInUser"));
+      setIsAuthenticated(!!hasCookie);
     };
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, []);
+  }, [hasCookie]);
 
   const handleFormClick = (
     e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>
@@ -105,7 +106,7 @@ function Header() {
     {
       id: 3,
       name: "Вход/регистрация",
-      href: "/login",
+      href: hasCookie ? "/profile" : "/login",
       icon: (
         <IconUser
           className={`size-3 fill-white ${
@@ -119,30 +120,28 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ease-linear lg:py-0 py-4 ${
+        className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ease-linear lg:pt-10 lg:pb-4 py-4 ${
           scrolled ? "bg-[#131313] backdrop-blur-sm" : ""
         }`}
       >
-        <div className="myContainer relative lg:my-4 flex lg:justify-between lg:items-center">
+        <div className="myContainer relative lg:mt-4 flex justify-between lg:items-center">
           {/* Logo */}
           <Link href="/">
-            <Image
-              src={
-                open ? "/assets/logo/mobile_logo.png" : "/assets/logo/logo.png"
-              }
-              alt="Logo"
-              width={100}
-              height={100}
-            />
+            <IconLogo className="w-[130px] h-[26px] hidden md:inline-block" />
+            <IconMobileLogo className="md:hidden w-12 h-12" />
           </Link>
 
           {/* Menubar icon */}
-          <div className="lg:hidden">
+          <div className="lg:hidden flex items-center">
+            <Button className="lg:hidden flex items-center gap-3 py-1 px-4 rounded-full border border-white mr-10">
+              Рус
+              <IconArrowDown className="size-6" />
+            </Button>
             <button
               onClick={() => setOpen(!open)}
               className={`text-4xl absolute top-2 md:right-8 sm:right-6 right-3 cursor-pointer z-50`}
             >
-              {open ? null : <MdOutlineMenu />}
+              <MdOutlineMenu className="size-8" />
             </button>
           </div>
 
@@ -174,13 +173,7 @@ function Header() {
             {open && (
               <>
                 <Link href="/">
-                  <Image
-                    src={"/assets/logo/logo.png"}
-                    alt="Logo"
-                    width={100}
-                    height={100}
-                    className="lg:hidden"
-                  />
+                  <IconMobileLogo className="lg:hidden w-20 h-20" />
                 </Link>
                 <ul className="lg:hidden space-y-5 mt-6">
                   {links.map((link) => (

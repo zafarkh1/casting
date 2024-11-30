@@ -62,7 +62,7 @@ body {
 }
 
 .catalogueBtn {
-  @apply py-2 lg:px-7 px-4 rounded-full lg:text-lg uppercase;
+  @apply py-2 lg:px-7 px-4 rounded-full lg:text-lg;
 }
 
 .image-responsive {

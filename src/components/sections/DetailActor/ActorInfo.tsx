@@ -13,7 +13,7 @@ type Actor = {
 
 function ActorInfo({ actor }: { actor: Actor }) {
   return (
-    <section className="lg:mt-24 mt-20 pt-10 border-y border-y-[#FFFFFF1A] border-b-0 flex lg:flex-row flex-col lg:items-start items-center lg:gap-[54px] gap-3">
+    <section className="lg:mt-32 mt-20 pt-10 border-y border-y-[#FFFFFF1A] border-b-0 flex lg:flex-row flex-col lg:items-start items-center lg:gap-[54px] gap-3">
       {/* Image */}
       <img
         src="/assets/detailActor/actress_1.png"

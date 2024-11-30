@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import { IconArrowTopRight } from "@/components/icons/icons";
 import Link from "next/link";
@@ -18,9 +20,10 @@ type Actor = {
 
 interface CardProps {
   filteredActors: Actor[];
+  data: any;
 }
 
-const Card: React.FC<CardProps> = ({ filteredActors }) => {
+const Card: React.FC<CardProps> = ({ filteredActors, data }) => {
   const [visibleActors, setVisibleActors] = useState(8);
   const [loading, setLoading] = useState(false);
 
@@ -40,9 +43,9 @@ const Card: React.FC<CardProps> = ({ filteredActors }) => {
     <>
       {/* Cards */}
       <div className="grid xl:grid-cols-4 md:grid-cols-3 grid-cols-2 xl:gap-x-5 xl:gap-y-7 sm:gap-8 gap-6 xl:py-14 sm:py-12 py-8 border-b border-y-[#FFFFFF1A]">
-        {filteredActors.slice(0, visibleActors).map((actor) => (
+        {/* {filteredActors.slice(0, visibleActors).map((actor) => (
           <Link key={actor.id} href={`/${actor.id}`}>
-            <div className="cursor-pointer lg:p-4 rounded-2xl group">
+            <div className="cursor-pointer rounded-2xl group">
               <img
                 src={actor.image}
                 alt={`${actor.firstName} ${actor.lastName}`}
@@ -53,6 +56,27 @@ const Card: React.FC<CardProps> = ({ filteredActors }) => {
               </h5>
               <p className="text-secondary lg:text-lg sm:text-sm text-xs group-hover:text-white transition-all duration-500">
                 {actor.job}
+              </p>
+            </div>
+          </Link>
+        ))} */}
+        {data?.map((actor: any) => (
+          <Link
+            key={actor.id}
+            href={`/${actor.id} `}
+            className="block aspect-[244/365] group"
+          >
+            <div className="cursor-pointer rounded-2xl">
+              <img
+                src={actor.picture.medium}
+                alt={`${actor.name}`}
+                className="aspect-[244/277] w-full rounded-2xl"
+              />
+              <h5 className="heading5 xl:mt-5 sm:mt-4 mt-3 xl:mb-3 mb-1 group-hover:text-primary transition-all duration-500">
+                {actor.name}
+              </h5>
+              <p className="text-secondary lg:text-lg sm:text-sm text-xs group-hover:text-white transition-all duration-500">
+                {actor.profession.name}
               </p>
             </div>
           </Link>

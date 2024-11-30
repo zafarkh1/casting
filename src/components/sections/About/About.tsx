@@ -1,6 +1,6 @@
 function About() {
   return (
-    <section className="relative lg:mt-24 mt-20 pt-10 pb-20 border-y border-y-[#FFFFFF1A] border-b-0">
+    <section className="relative lg:mt-32 mt-20 pt-10 pb-20 border-y border-y-[#FFFFFF1A] border-b-0">
       <h1 className="heading1">О компаний</h1>
       <img
         src="/assets/about/about.png"

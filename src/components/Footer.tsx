@@ -1,6 +1,14 @@
-import { IconArrowTopRight, IconSearch, IconUser } from "./icons/icons";
+"use client";
+
+import {
+  IconArrowTopRight,
+  IconLogo,
+  IconMobileLogo,
+  IconSearch,
+  IconUser,
+} from "./icons/icons";
 import Link from "next/link";
-import Image from "next/image";
+import Cookies from "js-cookie";
 
 const links = [
   {
@@ -51,10 +59,12 @@ const buttons = [
   {
     id: 3,
     name: "Вход/регистрация",
-    href: "/login",
+    href: Cookies.get("refresh_token_casting") ? "/profile" : "/login",
     icon: <IconUser className="size-3 fill-white" />,
   },
 ];
+
+console.log();
 
 function Footer() {
   return (
@@ -62,12 +72,7 @@ function Footer() {
       {/*       Mobile logo */}
       <div className="lg:py-8 lg:hidden py-10 border-t border-t-[#FFFFFF1A]">
         <Link href="/" className="">
-          <Image
-            src="/assets/logo/logo.png"
-            alt="Logo"
-            width={100}
-            height={100}
-          />
+          <IconMobileLogo className="w-12 h-12" />
         </Link>
       </div>
 
@@ -127,12 +132,7 @@ function Footer() {
       {/*      Logo       */}
       <div className="lg:py-8 hidden lg:flex justify-center items-center">
         <Link href="/" className="">
-          <Image
-            src="/assets/logo/logo.png"
-            alt="Logo"
-            width={100}
-            height={100}
-          />
+          <IconLogo className="w-[130px] h-[26px]" />
         </Link>
       </div>
     </footer>
