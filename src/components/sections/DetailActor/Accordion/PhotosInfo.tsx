@@ -9,7 +9,7 @@ const photos = [
   { id: 6, src: "/assets/detailActor/actress_7.png" },
 ];
 
-const PhotosInfo = () => {
+const PhotosInfo = ({ actor }: any) => {
   const { openSection, toggleSection } = useSectionStore();
 
   return (

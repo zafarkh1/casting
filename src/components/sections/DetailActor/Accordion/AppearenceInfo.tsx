@@ -1,6 +1,6 @@
 import { useSectionStore } from "@/components/utils/zustand/useSectionInfoStore";
 
-const AppearenceInfo = () => {
+const AppearenceInfo = ({ actor }: any) => {
   const { openSection, toggleSection } = useSectionStore();
 
   return (
@@ -25,23 +25,27 @@ const AppearenceInfo = () => {
       >
         <p className="pb-[11px] mt-6 border-b border-b-[#FFFFFF1A] flexBetween">
           <span className="text-secondary">Форма лица:</span>
-          <span>Круглая</span>
+          <span>{actor?.face_shape?.name}</span>
         </p>
         <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Форма лица:</span>
-          <span>Круглая</span>
+          <span className="text-secondary">Цвет и длина волос:</span>
+          <span>{actor?.hair_type?.name}</span>
         </p>
         <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Форма лица:</span>
-          <span>Круглая</span>
+          <span className="text-secondary">Тип кожи:</span>
+          <span>{actor?.skin_type?.name}</span>
         </p>
         <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Форма лица:</span>
-          <span>Круглая</span>
+          <span className="text-secondary">Цвет глаз:</span>
+          <span>{actor?.eye_type?.name}</span>
+        </p>
+        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
+          <span className="text-secondary">Особые черты лица:</span>
+          <span>{actor?.facial_feature?.name}</span>
         </p>
         <p className="lg:pb-0 pb-[11px] lg:border-0 border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Форма лица:</span>
-          <span>Круглая</span>
+          <span className="text-secondary">Физические особенности:</span>
+          <span>{actor?.physical_feature?.name}</span>
         </p>
       </div>
     </div>

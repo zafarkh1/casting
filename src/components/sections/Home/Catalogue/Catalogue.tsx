@@ -1,15 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useFilterCatalogue } from "@/components/utils/zustand/useFilterCatalogue";
+import { getActors } from "@/api/api";
 import Button from "@/components/Button";
 import Card from "./Card";
-import { useEffect, useState } from "react";
-import { actors } from "@/api/data";
-import { getActors } from "@/api/api";
 
 function Catalogue() {
   const { gender, actorType, setGender, setActorType } = useFilterCatalogue();
-  const [filteredActors, setFilteredActors] = useState(actors);
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -28,18 +26,17 @@ function Catalogue() {
 
     fetchData();
   }, []);
-  console.log(data);
 
-  useEffect(() => {
-    const filtered = actors.filter((actor) => {
-      const genderMatch = gender === "all" || actor.gender === gender;
-      const actorTypeMatch =
-        actorType === "all" || actor.category === actorType;
-      return genderMatch && actorTypeMatch;
-    });
+  // useEffect(() => {
+  //   const filtered = actors.filter((actor) => {
+  //     const genderMatch = gender === "all" || actor.gender === gender;
+  //     const actorTypeMatch =
+  //       actorType === "all" || actor.category === actorType;
+  //     return genderMatch && actorTypeMatch;
+  //   });
 
-    setFilteredActors(filtered);
-  }, [gender, actorType]);
+  //   setFilteredActors(filtered);
+  // }, [gender, actorType]);
 
   const genderOptions = [
     { label: "Все", value: "all" },
@@ -103,7 +100,7 @@ function Catalogue() {
         </div>
       </div>
 
-      <Card filteredActors={filteredActors} data={data} />
+      <Card data={data} />
     </section>
   );
 }

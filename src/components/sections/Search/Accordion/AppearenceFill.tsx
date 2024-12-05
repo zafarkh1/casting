@@ -1,16 +1,58 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IconArrowDown } from "@/components/icons/icons";
 import { useSectionFillStore } from "@/components/utils/zustand/useSectionFillStore";
-import { useRef } from "react";
+import { getRelatedValues } from "@/api/api";
+import { Controller, useForm } from "react-hook-form";
 
-const Appearence = () => {
+interface GeneralFillProps {
+  control: any;
+  setValue: any;
+}
+
+const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
   const { openSectionFill, toggleSectionFill } = useSectionFillStore();
-  const select1 = useRef<HTMLSelectElement>(null);
 
-  const openSelect = (selectRef: React.RefObject<HTMLSelectElement>) => {
-    if (selectRef.current) {
-      selectRef.current.focus();
-      selectRef.current.blur();
-      selectRef.current.focus();
+  const selectRef = useRef<HTMLSelectElement>(null);
+  const [categories, setCategories] = useState<{
+    [key: string]: any[];
+  }>({
+    "face-shape": [],
+    "eye-type": [],
+    "hair-type": [],
+    "skin-type": [],
+    "physical-feature": [],
+    "facial-feature": [],
+  });
+
+  useEffect(() => {
+    const fetchCategoryData = async (category: string) => {
+      try {
+        const response = await getRelatedValues(category);
+        setCategories((prev) => ({
+          ...prev,
+          [category]: response.results,
+        }));
+      } catch (error) {
+        console.error(`Error fetching data for ${category}:`, error);
+      }
+    };
+
+    const categoriesToFetch = [
+      "face-shape",
+      "eye-type",
+      "hair-type",
+      "skin-type",
+      "physical-feature",
+      "facial-feature",
+    ];
+    categoriesToFetch.forEach(fetchCategoryData);
+  }, []);
+
+  const openSelect = (ref: React.RefObject<HTMLSelectElement>) => {
+    if (ref.current) {
+      ref.current.focus();
+      ref.current.blur();
+      ref.current.focus();
     }
   };
 
@@ -31,212 +73,202 @@ const Appearence = () => {
           openSectionFill === "Внешность" ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
+        {/* Face Shape */}
         <div className="lg:mt-10 lg:mb-7 my-3 grid md:grid-cols-2 grid-cols-1 lg:gap-7 gap-4 lg:pr-4">
-          {/* Face shape */}
           <div>
             <h3 className="heading6">Форма лица:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Круглая
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Квадратная
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Прямоугольная
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Овал
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
+            <div className="mt-4 relative">
+              <Controller
+                name="face_shape"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["face-shape"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
             </div>
           </div>
 
-          {/* Eyes color */}
+          {/* Eye Type */}
           <div>
-            <h3 className="heading6">Цвет глаз</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Карие
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Голубые
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Серые
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Зеленые
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
+            <h3 className="heading6">Цвет глаз:</h3>
+            <div className="mt-4 relative">
+              <Controller
+                name="eye_type"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["eye-type"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
             </div>
           </div>
-        </div>
 
-        <div className="lg:mt-10 lg:mb-7 my-3 grid md:grid-cols-2 grid-cols-1 lg:gap-7 gap-4 lg:pr-4">
-          {/* Hair color */}
+          {/* Hair Type */}
           <div>
             <h3 className="heading6">Цвет волос:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Каштан
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Серый
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Белый
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Черный
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
+            <div className="mt-4 relative">
+              <Controller
+                name="hair_type"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["hair-type"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
             </div>
           </div>
 
-          {/* Special features */}
+          {/* Facial Feature */}
           <div>
             <h3 className="heading6">Особые черты лица:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    спортивная
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    красивая
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    обычная
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    умная
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="lg:mt-10 lg:mb-7 my-3 grid md:grid-cols-2 grid-cols-1 lg:gap-7 gap-4 lg:pr-4">
-          {/* Skin color */}
-          <div>
-            <h3 className="heading6">Тип кожи:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    светлая
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    темная
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    серая
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    зеленая
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
+            <div className="mt-4 relative">
+              <Controller
+                name="facial_feature"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["facial-feature"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
             </div>
           </div>
 
-          {/* Physical features */}
+          {/* Skin Type */}
           <div>
-            <h3 className="heading6">Физические особенности:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    спортивная
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    красивая
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    обычная
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    умная
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
+            <h3 className="heading6">Цвет кожи:</h3>
+            <div className="mt-4 relative">
+              <Controller
+                name="skin_type"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["skin-type"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
+            </div>
+          </div>
+
+          {/* Physical Feature */}
+          <div>
+            <h3 className="heading6">Особые черты тела:</h3>
+            <div className="mt-4 relative">
+              <Controller
+                name="physical_feature"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                  >
+                    {categories["physical-feature"].map((item) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        className="bg-[#333] py-2"
+                      >
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+              <span
+                onClick={() => openSelect(selectRef)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
+              >
+                <IconArrowDown className="size-4" />
+              </span>
             </div>
           </div>
         </div>

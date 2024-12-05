@@ -24,6 +24,8 @@ const Login = () => {
       const user_id = result.split("user_id=")[1]?.split("&")[0];
       const code = result.split("code=")[1];
 
+      console.log("Verification URL received:", serverMessage.verification_url);
+
       if (user_id && code) {
         loginUser(user_id, code);
       } else {
@@ -50,10 +52,8 @@ const Login = () => {
 
   const loginUser = async (user_uid: string, code: string) => {
     try {
-      const response = await login(user_uid, code);
-
+      await login(user_uid, code);
       setLoginError("");
-      console.log("Login response:", response);
     } catch (error) {
       console.error("Error during login:", error);
       setLoginError("Failed to login. Please try again.");

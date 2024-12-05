@@ -1,10 +1,20 @@
 import { IconPhoto } from "@/components/icons/icons";
 import { useSectionFillStore } from "@/components/utils/zustand/useSectionFillStore";
-import { useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 
 const PhotosFill = () => {
   const { openSectionFill, toggleSectionFill } = useSectionFillStore();
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [fileNames, setFileNames] = useState<string[]>([]);
+
+  const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    console.log("Selected files:", files);
+
+    if (files) {
+      const newFileNames = Array.from(files).map((file) => file.name);
+      setFileNames(newFileNames);
+    }
+  };
 
   return (
     <div className="border-b border-b-[#FFFFFF1A] py-3 cursor-pointer">
@@ -25,17 +35,20 @@ const PhotosFill = () => {
       >
         <div
           className="mt-4 lg:w-1/6 h-36 border-2 border-dashed border-secondary flex items-center justify-center rounded-xl cursor-pointer"
-          onClick={() => document.getElementById("file-input")?.click()}
+          onClick={() => document.getElementById("file-inputs")?.click()}
         >
           <input
-            id="file-input"
+            id="file-inputs"
             type="file"
             className="hidden"
-            // onChange={handleFileChange}
+            onChange={handleFilesChange}
+            multiple
           />
           <div className="flex gap-2">
             <IconPhoto className="size-6" />
-            <span>{fileName || "Добавить фото"}</span>
+            <span>
+              {fileNames.length > 0 ? fileNames.join(", ") : "Добавить фото"}
+            </span>
           </div>
         </div>
       </div>

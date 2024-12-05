@@ -30,8 +30,8 @@ function Search() {
         setFilteredActors={setFilteredActors}
       />
       <CategoryBtns />
-      <Filter />
-      <Card filteredActors={filteredActors} />
+      {/* <Filter /> */}
+      {/* <Card filteredActors={filteredActors} /> */}
     </>
   );
 }

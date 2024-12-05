@@ -64,8 +64,6 @@ const buttons = [
   },
 ];
 
-console.log();
-
 function Footer() {
   return (
     <footer className="myContainer">

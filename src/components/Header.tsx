@@ -127,7 +127,7 @@ function Header() {
         <div className="myContainer relative lg:mt-4 flex justify-between lg:items-center">
           {/* Logo */}
           <Link href="/">
-            <IconLogo className="w-[130px] h-[26px] hidden md:inline-block" />
+            <IconLogo className="w-[175px] h-[50px] hidden md:inline-block" />
             <IconMobileLogo className="md:hidden w-12 h-12" />
           </Link>
 

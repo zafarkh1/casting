@@ -1,18 +1,60 @@
-import { IconArrowDown } from "@/components/icons/icons";
+import { getRelatedValues } from "@/api/api";
+import { useEffect, useState } from "react";
+import SkillCategory from "./SkillCategory";
 import { useSectionFillStore } from "@/components/utils/zustand/useSectionFillStore";
-import { useRef } from "react";
 
 const Skills = () => {
+  const categories = [
+    {
+      id: "acting-skill",
+      title: "Актёрское мастерство:",
+      sendId: "acting_skills",
+    },
+    { id: "voice-skill", title: "Работа с голосом:", sendId: "voice_skills" },
+    {
+      id: "movement-skill",
+      title: "Движение и пластика:",
+      sendId: "movement_skills",
+    },
+    {
+      id: "musical-skill",
+      title: "Музыкальные навыки:",
+      sendId: "musical_skills",
+    },
+    {
+      id: "language-skill",
+      title: "Языковые навыки:",
+      sendId: "language_skills",
+    },
+    {
+      id: "social-skill",
+      title: "Социальные и коммуникативные навыки:",
+      sendId: "social_skills",
+    },
+    {
+      id: "specific-role-skill",
+      title: "Профессиональные навыки для специфических ролей:",
+      sendId: "specific_role_skills",
+    },
+  ];
   const { openSectionFill, toggleSectionFill } = useSectionFillStore();
-  const select1 = useRef<HTMLSelectElement>(null);
 
-  const openSelect = (selectRef: React.RefObject<HTMLSelectElement>) => {
-    if (selectRef.current) {
-      selectRef.current.focus();
-      selectRef.current.blur();
-      selectRef.current.focus();
-    }
-  };
+  const [skillsData, setSkillsData] = useState<{
+    [key: string]: { id: string; name: string }[];
+  }>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData: { [key: string]: { id: string; name: string }[] } = {};
+      for (const category of categories) {
+        const values = await getRelatedValues(category.id);
+        fetchedData[category.id] = values.results || [];
+      }
+      setSkillsData(fetchedData);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="border-b border-b-[#FFFFFF1A] py-3 cursor-pointer">
@@ -32,246 +74,14 @@ const Skills = () => {
         }`}
       >
         <div className="lg:mt-10 lg:mb-7 my-3 lg:pr-4 space-y-4">
-          {/* Mastership */}
-          <div>
-            <h3 className="heading6">Актёрское мастерство:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Эмоциональная выразительность
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Эмоциональная выразительность
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Эмоциональная выразительность
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Эмоциональная выразительность
-                  </option>
-                </select>
-
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Work with voice */}
-          <div>
-            <h3 className="heading6">Работа с голосом:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Озвучивание и дубляж
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Озвучивание и дубляж
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Озвучивание и дубляж
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Озвучивание и дубляж
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Dance */}
-          <div>
-            <h3 className="heading6">Движение и пластика:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Танцы и хореография
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Танцы и хореография
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Танцы и хореография
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Танцы и хореография
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Music */}
-          <div>
-            <h3 className="heading6">Музыкальные навыки:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Игра на музыкальных инструментах
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Игра на музыкальных инструментах
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Игра на музыкальных инструментах
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Игра на музыкальных инструментах
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Languages */}
-          <div>
-            <h3 className="heading6">Языковые навыки:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Знание иностранных языков
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Знание иностранных языков
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Знание иностранных языков
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Знание иностранных языков
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="heading6">Социальные и коммуникативные навыки:</h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Работа в команде
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Работа в команде
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Работа в команде
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Работа в команде
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Profession */}
-          <div>
-            <h3 className="heading6">
-              Профессиональные навыки для специфических ролей:
-            </h3>
-            <div className="flex lg:flex-row flex-col lg:items-center lg:gap-4 gap-3 mt-4 bg-transparent">
-              <div className="relative w-full">
-                <select
-                  ref={select1}
-                  name=""
-                  id=""
-                  className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
-                >
-                  <option value="0" className="bg-[#333] py-2">
-                    Навыки езды на транспортных средствах
-                  </option>
-                  <option value="1" className="bg-[#333] py-2">
-                    Навыки езды на транспортных средствах
-                  </option>
-                  <option value="2" className="bg-[#333] py-2">
-                    Навыки езды на транспортных средствах
-                  </option>
-                  <option value="3" className="bg-[#333] py-2">
-                    Навыки езды на транспортных средствах
-                  </option>
-                </select>
-                <span
-                  onClick={() => openSelect(select1)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary rounded-full p-[5px] cursor-pointer"
-                >
-                  <IconArrowDown className="size-4" />
-                </span>
-              </div>
-            </div>
-          </div>
+          {categories.map((category) => (
+            <SkillCategory
+              key={category.id}
+              title={category.title}
+              options={skillsData[category.id] || []}
+              name={category.sendId}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -1,7 +1,26 @@
 import { useSectionStore } from "@/components/utils/zustand/useSectionInfoStore";
 
-const EducationInfo = () => {
+const EducationInfo = ({ actor }: any) => {
   const { openSection, toggleSection } = useSectionStore();
+
+  const skills = [
+    {
+      label: "Учебные заведения",
+      value: actor?.educations?.educational_institution?.name,
+    },
+    {
+      label: "Курсы и мастер-классы",
+      value: actor?.educations?.courses_and_workshop?.name,
+    },
+    {
+      label: "Актёрские методики",
+      value: actor?.educations?.acting_method?.name,
+    },
+    {
+      label: "Дополнительные навыки",
+      value: actor?.educations?.additional_skills?.name,
+    },
+  ];
 
   return (
     <div className="border-b border-b-[#FFFFFF1A] py-3 cursor-pointer">
@@ -19,30 +38,19 @@ const EducationInfo = () => {
       </div>
 
       <div
-        className={`overflow-hidden transition-all duration-500 lg:text-lg text-base lg:space-y-6  ${
+        className={`overflow-hidden transition-all duration-500 lg:text-lg text-base lg:space-y-6 ${
           openSection === "Образование" ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <p className="pb-[11px] mt-6 border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Учебные заведени</span>
-          <span>Школа-студия МХАТ</span>
-        </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Учебные заведени</span>
-          <span>Школа-студия МХАТ</span>
-        </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Учебные заведени</span>
-          <span>Школа-студия МХАТ</span>
-        </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Учебные заведени</span>
-          <span>Школа-студия МХАТ</span>
-        </p>
-        <p className="lg:pb-0 pb-[11px] lg:border-0 border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Учебные заведени</span>
-          <span>Школа-студия МХАТ</span>
-        </p>
+        {skills.map((skill, index) => (
+          <p
+            key={index}
+            className="pb-[11px] mt-6 border-b border-b-[#FFFFFF1A] flexBetween"
+          >
+            <span className="text-secondary">{skill.label}:</span>
+            <span>{skill.value || "N/A"}</span>
+          </p>
+        ))}
       </div>
     </div>
   );

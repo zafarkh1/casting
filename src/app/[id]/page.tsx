@@ -1,30 +1,33 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { actors } from "@/api/data";
 import ActorInfo from "@/components/sections/DetailActor/ActorInfo";
 import AccordionInfo from "@/components/sections/DetailActor/AccordionInfo";
-import Contact from "@/components/sections/Home/Contact";
-
-// Define the Actor type if it's not already defined
-type Actor = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  lives: string;
-  playingAge: { min: number; max: number };
-  about: string;
-  image: string;
-  job: string;
-  category: string;
-};
+import { useEffect, useState } from "react";
+import { getActorDetail, getActors } from "@/api/api";
 
 const Detail = () => {
+  const [actor, setActor] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const params = useParams();
   const id = params?.id as string;
 
-  const actor = actors.find((actor: Actor) => actor.id === id);
+  useEffect(() => {
+    const fetchActor = async () => {
+      try {
+        const fetchedData = await getActorDetail(id);
+        setActor(fetchedData);
+      } catch (error) {
+        setError("Failed to fetch actor.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActor();
+  }, []);
 
   if (!actor) {
     return <div>Actor not found</div>;
@@ -33,7 +36,7 @@ const Detail = () => {
   return (
     <div className="myContainer">
       <ActorInfo actor={actor} />
-      <AccordionInfo />
+      <AccordionInfo actor={actor} />
     </div>
   );
 };

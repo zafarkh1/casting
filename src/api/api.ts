@@ -1,63 +1,144 @@
-import axios from "axios";
+import fetchInstance from "@/components/utils/axios/axiosInstance";
 import Cookies from "js-cookie";
-
-const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const sendCode = async (email: string) => {
-  const url = `/ru/api/v1/users/send-code/`;
   try {
-    const response = await axiosInstance.post(url, { username: email });
-    return response.data;
+    return await fetchInstance("/ru/api/v1/users/send-code/", {
+      method: "POST",
+      body: JSON.stringify({ username: email }),
+    });
   } catch (error) {
+    console.error("Error sending code:", error);
     throw error;
   }
 };
 
 export const getActors = async () => {
-  const url = `/ru/api/v1/actors/list/`;
-
   try {
-    const { data } = await axiosInstance.get(url);
+    const data = await fetchInstance("/ru/api/v1/actors/list/", {
+      method: "GET",
+    });
     return {
-      props: {
-        actors: data.results,
-      },
+      props: { actors: data.results },
     };
   } catch (error) {
     console.error("Error fetching actors:", error);
-    return {
-      props: {
-        actors: [],
-      },
-    };
+    return { props: { actors: [] } };
+  }
+};
+
+export const getActorDetail = async (id: string) => {
+  try {
+    return await fetchInstance(`/ru/api/v1/actors/detail/${id}/`, {
+      method: "GET",
+    });
+  } catch (error) {
+    console.error("Error fetching actor detail:", error);
+    throw error;
   }
 };
 
 export const createApplicationForm = async () => {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/ru/api/v1/actors/application-form/create/`;
-
-  const token = Cookies.get("access_token_casting");
-
   try {
-    const response = await fetch(url, {
+    const response = await fetchInstance(
+      "/ru/api/v1/actors/application-form/create/",
+      {
+        method: "POST",
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error creating application form:", error);
+    throw error;
+  }
+};
+
+export const getProfile = async () => {
+  try {
+    return await fetchInstance("/ru/api/v1/users/profile", { method: "GET" });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    throw error;
+  }
+};
+
+export const getProfileData = async () => {
+  try {
+    return await fetchInstance("/ru/api/v1/actors/application-form/", {
+      method: "GET",
+    });
+  } catch (error) {
+    console.error("Error fetching profile data:", error);
+    throw error;
+  }
+};
+
+export const getRelatedValues = async (category: string) => {
+  try {
+    return await fetchInstance(
+      `/ru/api/v1/actors/related-values/${category}/`,
+      {
+        method: "GET",
+      }
+    );
+  } catch (error) {
+    console.error("Error fetching related values:", error);
+    throw error;
+  }
+};
+
+export const updateProfileData = async (data: any) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/ru/api/v1/actors/application-form/`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("access_token_casting")}`,
+        },
+        body: data,
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.json();
+      throw new Error(
+        `Server responded with ${response.status}: ${JSON.stringify(
+          errorDetails
+        )}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating profile data:", error);
+    throw error;
+  }
+};
+
+export const postApplicationForm = async (data: any) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/ru/api/v1/actors/publish/`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Cookies.get("access_token_casting")}`,
       },
+      body: data,
     });
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
+      const errorDetails = await response.json();
+      throw new Error(
+        `Server responded with ${response.status}: ${JSON.stringify(
+          errorDetails
+        )}`
+      );
     }
 
-    return response;
+    return await response.json();
   } catch (error) {
-    console.error("Error during fetch:", error);
+    console.error("Error creating application form:", error);
     throw error;
   }
 };

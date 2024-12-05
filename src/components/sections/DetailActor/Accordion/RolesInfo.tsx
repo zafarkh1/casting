@@ -1,7 +1,15 @@
 import { useSectionStore } from "@/components/utils/zustand/useSectionInfoStore";
 
-const RolesInfo = () => {
+const RolesInfo = ({ actor }: any) => {
   const { openSection, toggleSection } = useSectionStore();
+
+  const roles = [
+    { label: "Год", value: actor?.roles?.year },
+    { label: "Название фильма", value: actor?.roles?.film_name },
+    { label: "Тип проекта", value: actor?.roles?.project_type },
+    { label: "Режиссёр", value: actor?.roles?.film_director_name },
+    { label: "Награды и номинации", value: actor?.roles?.awards_nominations },
+  ];
 
   return (
     <div className="border-b border-b-[#FFFFFF1A] py-3 cursor-pointer">
@@ -19,30 +27,22 @@ const RolesInfo = () => {
       </div>
 
       <div
-        className={`overflow-hidden transition-all duration-500 lg:text-lg text-base lg:space-y-6  ${
+        className={`overflow-hidden transition-all duration-500 lg:text-lg text-base lg:space-y-6 ${
           openSection === "Роли" ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <p className="pb-[11px] mt-6 border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Роль:</span>
-          <span>Жесси (Я играл роль на главных ролях...)</span>
+        <p className="mt-3 text-2xl text-white">
+          {actor?.roles?.role_name ? actor?.roles?.role_name : "N/A"}
         </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Роль:</span>
-          <span>Жесси (Я играл роль на главных ролях...)</span>
-        </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Роль:</span>
-          <span>Жесси (Я играл роль на главных ролях...)</span>
-        </p>
-        <p className="pb-[11px] border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Роль:</span>
-          <span>Жесси (Я играл роль на главных ролях...)</span>
-        </p>
-        <p className="lg:pb-0 pb-[11px] lg:border-0 border-b border-b-[#FFFFFF1A] flexBetween">
-          <span className="text-secondary">Роль:</span>
-          <span>Жесси (Я играл роль на главных ролях...)</span>
-        </p>
+        {roles.map((role, index) => (
+          <p
+            key={index}
+            className="pb-[11px] mt-6 border-b border-b-[#FFFFFF1A] flexBetween"
+          >
+            <span className="text-secondary">{role.label}:</span>
+            <span>{role.value || "N/A"}</span>
+          </p>
+        ))}
       </div>
     </div>
   );
