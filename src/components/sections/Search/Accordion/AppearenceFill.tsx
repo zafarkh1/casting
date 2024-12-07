@@ -3,6 +3,7 @@ import { IconArrowDown } from "@/components/icons/icons";
 import { useSectionFillStore } from "@/components/utils/zustand/useSectionFillStore";
 import { getRelatedValues } from "@/api/api";
 import { Controller, useForm } from "react-hook-form";
+import { useFilterCatalogue } from "@/components/utils/zustand/useFilterCatalogue";
 
 interface GeneralFillProps {
   control: any;
@@ -13,6 +14,7 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
   const { openSectionFill, toggleSectionFill } = useSectionFillStore();
 
   const selectRef = useRef<HTMLSelectElement>(null);
+  const selectFaceRef = useRef<HTMLSelectElement>(null);
   const [categories, setCategories] = useState<{
     [key: string]: any[];
   }>({
@@ -23,6 +25,15 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
     "physical-feature": [],
     "facial-feature": [],
   });
+  const {
+    setFormShape,
+    setEyeType,
+    setHairType,
+    setSkinType,
+    setFacialFeature,
+    setPhysicalFeature,
+    mode,
+  } = useFilterCatalogue();
 
   useEffect(() => {
     const fetchCategoryData = async (category: string) => {
@@ -84,7 +95,16 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                 render={({ field }) => (
                   <select
                     {...field}
+                    ref={selectFaceRef}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setFormShape(selectedValue);
+                      }
+                    }}
                   >
                     {categories["face-shape"].map((item) => (
                       <option
@@ -118,6 +138,14 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                   <select
                     {...field}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setEyeType(selectedValue);
+                      }
+                    }}
                   >
                     {categories["eye-type"].map((item) => (
                       <option
@@ -151,6 +179,14 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                   <select
                     {...field}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setHairType(selectedValue);
+                      }
+                    }}
                   >
                     {categories["hair-type"].map((item) => (
                       <option
@@ -184,6 +220,14 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                   <select
                     {...field}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setFacialFeature(selectedValue);
+                      }
+                    }}
                   >
                     {categories["facial-feature"].map((item) => (
                       <option
@@ -217,6 +261,14 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                   <select
                     {...field}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setSkinType(selectedValue);
+                      }
+                    }}
                   >
                     {categories["skin-type"].map((item) => (
                       <option
@@ -250,6 +302,14 @@ const Appearence: React.FC<GeneralFillProps> = ({ control, setValue }) => {
                   <select
                     {...field}
                     className="catalogueBtn border border-[#333] w-full bg-transparent pr-8 appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+
+                      field.onChange(selectedValue);
+                      if (mode === "filter") {
+                        setPhysicalFeature(selectedValue);
+                      }
+                    }}
                   >
                     {categories["physical-feature"].map((item) => (
                       <option

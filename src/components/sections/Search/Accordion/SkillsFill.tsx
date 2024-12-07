@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import SkillCategory from "./SkillCategory";
 import { useSectionFillStore } from "@/components/utils/zustand/useSectionFillStore";
 
-const Skills = () => {
+const Skills = ({ control, setValue }: { control: any; setValue: any }) => {
   const categories = [
     {
       id: "acting-skill",
@@ -76,10 +76,12 @@ const Skills = () => {
         <div className="lg:mt-10 lg:mb-7 my-3 lg:pr-4 space-y-4">
           {categories.map((category) => (
             <SkillCategory
+              control={control}
               key={category.id}
               title={category.title}
               options={skillsData[category.id] || []}
               name={category.sendId}
+              setValue={setValue}
             />
           ))}
         </div>

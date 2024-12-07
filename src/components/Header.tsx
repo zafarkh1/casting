@@ -17,6 +17,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useLoginModalStore } from "./utils/zustand/useLoginModalStore";
 import LoginModal from "./sections/Form/LoginModal";
 import Cookies from "js-cookie";
+import { useFilterCatalogue } from "./utils/zustand/useFilterCatalogue";
 
 const links = [
   { id: 1, title: "Главная", href: "/" },
@@ -31,6 +32,13 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const hasCookie = Cookies.get("refresh_token_casting");
+  const { setMode, mode } = useFilterCatalogue();
+
+  useEffect(() => {
+    const isSearchPage = pathname === "/search";
+    setMode(isSearchPage ? "filter" : "post");
+  }, [pathname, setMode]);
+  console.log(mode);
 
   useEffect(() => {
     const handleScroll = () => {

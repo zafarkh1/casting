@@ -7,16 +7,18 @@ interface SkillCategoryProps {
   title: string;
   options: { id: string; name: string }[];
   name: string;
-  // control: any;
+  control: any;
+  setValue: any;
 }
 
 const SkillCategory: React.FC<SkillCategoryProps> = ({
   title,
   options,
   name,
-  // control,
+  control,
+  setValue,
 }) => {
-  const { setValue, control } = useFormContext();
+  // const { setValue } = useFormContext();
   const formattedOptions = options.map((option) => ({
     value: option.id,
     label: option.name,
@@ -84,6 +86,8 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({
     }
   };
 
+  const [data, setData] = useState([]);
+
   return (
     <div>
       <h3 className="heading6">{title}</h3>
@@ -95,21 +99,35 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({
             render={({ field }) => (
               <Select
                 {...field}
+                value={data}
                 isMulti
                 options={formattedOptions}
                 className="react-select-container"
                 classNamePrefix="react-select"
                 styles={customStyles}
-                onChange={(selectedOptions) => {
-                  const selectedValues = selectedOptions.map(
-                    (option) => option.value
-                  );
-                  setValue(name, selectedValues);
-                  console.log(
-                    `Updated field "${name}" with values:`,
-                    selectedValues
-                  );
-                }}
+                // onChange={(selectedOptions) => {
+                //   // setData((prev) => [...prev, selectedOptions]);
+                //   console.log(selectedOptions);
+                //   setData(selectedOptions);
+                //   // {
+                //   //   data.forEach((n, index) => {
+                //   //     console.log(n);
+
+                //   //     setValue(name, n.value);
+                //   //   });
+                //   // }
+                //   setValue(name, data[0].value);
+                //   setValue(name, data[1].value);
+                //   setValue(name, data[2].value);
+                //   // const selectedValues = selectedOptions.map(
+                //   //   (option) => option.value
+                //   // );
+                //   // setValue(name, selectedValues);
+                //   // console.log(
+                //   //   `Updated field "${name}" with values:`,
+                //   //   selectedValues
+                //   // );
+                // }}
                 placeholder="Выберите навыки..."
               />
             )}

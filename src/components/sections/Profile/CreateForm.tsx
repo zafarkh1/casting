@@ -19,81 +19,50 @@ import { usePathname } from "next/navigation";
 import Contact from "../Home/Contact";
 
 interface FormInfo {
-  name: string;
-  work_age_from: string;
-  work_age_to: string;
-  profession: string;
-  city: string;
-  phone: string;
-  email: string;
-  gender: string;
-  professional_level: string;
-  birth_date: string;
-  description: string;
-  picture: File | string;
-  physical_feature: string;
-  face_shape: string;
-  eye_type: string;
-  hair_type: string;
-  skin_type: string;
-  facial_feature: string;
-  height: string;
-  weight: string;
-  leg_length: string;
-  shoe_size: string;
-  hip_circumference: string;
-  chest_circumference: string;
-  waist_circumference: string;
-  clothing_size: string;
-  acting_skills: string;
-  voice_skills: string;
-  movement_skills: string;
-  musical_skills: string;
-  language_skills: string;
-  social_skills: string;
-  specific_role_skills: string;
+  [key: string]: any;
 }
 
 const CreateForm = () => {
-  const { control, handleSubmit, setValue, reset, getValues } =
-    useForm<FormInfo>({
-      defaultValues: {
-        name: "",
-        work_age_from: "",
-        work_age_to: "",
-        profession: "",
-        city: "",
-        phone: "",
-        email: "",
-        gender: "",
-        birth_date: "",
-        professional_level: "",
-        description: "",
-        picture: "",
-        physical_feature: "",
-        face_shape: "",
-        eye_type: "",
-        hair_type: "",
-        skin_type: "",
-        facial_feature: "",
-        height: "",
-        weight: "",
-        leg_length: "",
-        shoe_size: "",
-        hip_circumference: "",
-        chest_circumference: "",
-        waist_circumference: "",
-        clothing_size: "",
-        acting_skills: "",
-        voice_skills: "",
-        movement_skills: "",
-        musical_skills: "",
-        language_skills: "",
-        social_skills: "",
-        specific_role_skills: "",
-      },
-    });
+  const { control, handleSubmit, setValue, reset, watch } = useForm<FormInfo>({
+    defaultValues: {
+      name: "",
+      work_age_from: "",
+      work_age_to: "",
+      profession: "",
+      city: "",
+      phone: "",
+      email: "",
+      gender: "",
+      birth_date: "",
+      professional_level: "",
+      description: "",
+      picture: "",
+      physical_feature: "",
+      face_shape: "",
+      eye_type: "",
+      hair_type: "",
+      skin_type: "",
+      facial_feature: "",
+      height: "",
+      weight: "",
+      leg_length: "",
+      shoe_size: "",
+      hip_circumference: "",
+      chest_circumference: "",
+      waist_circumference: "",
+      clothing_size: "",
+      acting_skills: "",
+      voice_skills: "",
+      movement_skills: "",
+      musical_skills: "",
+      language_skills: "",
+      social_skills: "",
+      specific_role_skills: "",
+    },
+  });
+
   const pathname = usePathname();
+  const watchedValues = watch();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -120,40 +89,55 @@ const CreateForm = () => {
             specific_role_skills: fetchedData.specific_role_skills?.id || "",
           });
         }
-      } catch (error: any) {
-        console.error("Error fetching profile data:", error.message || error);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
       }
     };
 
     fetchProfileData();
   }, [reset]);
 
-  const onSubmit = async (data: FormInfo) => {
+  const prepareFormData = (data: FormInfo, isPatch: boolean) => {
+    console.log(data);
     const formData = new FormData();
 
-    if (data.picture) {
-      formData.append("picture", data.picture);
-    }
-
     Object.entries(data).forEach(([key, value]) => {
-      if (value instanceof File) {
-        formData.append(key, value);
-      } else if (value !== null && value !== undefined) {
-        formData.append(key, String(value));
-      } else if (key !== "picture") {
+      console.log(key, value);
+
+      if (
+        value instanceof File ||
+        (value !== null && value !== undefined && value !== "")
+      ) {
         formData.append(key, value);
       }
     });
 
-    console.log("formData", formData);
+    if (isPatch) {
+      Object.keys(watchedValues).forEach((key) => {
+        if (watchedValues[key] !== data[key]) {
+          formData.append(key, data[key]);
+        }
+      });
+    }
+
+    return formData;
+  };
+
+  const onSubmit = async (data: FormInfo) => {
+    const isUpdate = pathname === "/profile";
+
+    const formData = prepareFormData(data, isUpdate);
 
     try {
-      pathname === "/profile"
-        ? updateProfileData(formData)
-        : postApplicationForm(formData);
+      if (isUpdate) {
+        await updateProfileData(formData);
+      } else {
+        await postApplicationForm(formData);
+      }
+      alert("Data saved successfully!");
     } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("An error occurred while updating the profile.");
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
     }
   };
 
@@ -161,16 +145,19 @@ const CreateForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <GeneralFill control={control} setValue={setValue} />
       <Appearence control={control} setValue={setValue} />
-      <Size control={control} />
-      <Skills control={control} />
-      <EducationFill control={control} setValue={setValue} />
-      <RolesFill />
-      <PhotosFill />
-
+      {pathname !== "/search" && <Size control={control} />}
+      <Skills control={control} setValue={setValue} />
+      {pathname !== "/search" && (
+        <>
+          <EducationFill control={control} setValue={setValue} />
+          <RolesFill />
+          <PhotosFill />
+        </>
+      )}
       {pathname === "/profile" && (
         <div className="py-6 border-b border-b-[#FFFFFF1A] flex items-center justify-end lg:gap-6 gap-3">
           <p className="text uppercase underline cursor-pointer hover:text-primary transition-all duration-300">
-            уДАЛИТЬ анкету
+            удалить анкету
           </p>
           <Button
             type="submit"
@@ -180,7 +167,6 @@ const CreateForm = () => {
           </Button>
         </div>
       )}
-
       {pathname === "/form" && (
         <Button type="submit" className="w-full">
           <Contact heading="ОТПРАВИТЬ" />
@@ -191,3 +177,25 @@ const CreateForm = () => {
 };
 
 export default CreateForm;
+
+// filter
+//         "gender",
+//         "professional_level",
+//         "city",
+//         "profession",
+//         "city__country",
+
+//         "face_shape",
+//         "hair_type",
+//         "skin_type",
+//         "eye_type",
+//         "facial_feature",
+//         "physical_feature",
+
+//         "acting_skills",
+//         "voice_skills",
+//         "movement_skills",
+//         "musical_skills",
+//         "language_skills",
+//         "social_skills",
+//         "specific_role_skills",

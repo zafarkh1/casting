@@ -1,21 +1,52 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useFilterCatalogue } from "@/components/utils/zustand/useFilterCatalogue";
-import { getActors } from "@/api/api";
+import { getActors, getRelatedValues } from "@/api/api";
 import Button from "@/components/Button";
 import Card from "./Card";
+import { useFilterCatalogue } from "@/components/utils/zustand/useFilterCatalogue";
 
 function Catalogue() {
   const { gender, actorType, setGender, setActorType } = useFilterCatalogue();
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [categoryOptions, setCategoryOptions] = useState([
+    { label: "", value: "" },
+  ]);
 
+  // Fetch categories dynamically
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await getRelatedValues("profession");
+        setCategoryOptions([
+          { label: "Все", value: "all" },
+          ...response.results.map((category: any) => ({
+            label: category.name,
+            value: category.id,
+          })),
+        ]);
+      } catch (error) {
+        console.error("Failed to fetch category options:", error);
+      }
+    };
+
+    fetchCategoryData();
+  }, []);
+
+  // Fetch actors when filters change
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError("");
+
       try {
-        const { props } = await getActors();
+        const filters = {};
+        if (gender !== "all") filters.gender = gender === "male" ? "M" : "F";
+        if (actorType !== "all") filters.profession = actorType;
+
+        const { props } = await getActors(filters);
         setData(props.actors);
       } catch (error) {
         setError("Failed to fetch actors.");
@@ -25,42 +56,20 @@ function Catalogue() {
     };
 
     fetchData();
-  }, []);
+  }, [gender, actorType]);
 
-  // useEffect(() => {
-  //   const filtered = actors.filter((actor) => {
-  //     const genderMatch = gender === "all" || actor.gender === gender;
-  //     const actorTypeMatch =
-  //       actorType === "all" || actor.category === actorType;
-  //     return genderMatch && actorTypeMatch;
-  //   });
-
-  //   setFilteredActors(filtered);
-  // }, [gender, actorType]);
-
+  // Gender filter options
   const genderOptions = [
     { label: "Все", value: "all" },
-    { label: "Мужщины", value: "male" },
+    { label: "Мужчины", value: "male" },
     { label: "Женщины", value: "female" },
   ];
-
-  const categoryOptions = [
-    { label: "Все", value: "all" },
-    { label: "Киноактеры", value: "filmActors" },
-    { label: "Актеры озвучки", value: "voiceActors" },
-    { label: "Актеры сериалов", value: "seriesActors" },
-  ];
-
-  useEffect(() => {
-    setGender("all");
-    setActorType("all");
-  }, []);
 
   return (
     <section className="pt-6">
       <h2 className="heading2">каталог актеров</h2>
 
-      {/* Gender buttons */}
+      {/* Gender filter */}
       <div className="lg:my-10 my-6">
         <h3 className="heading3">Пол:</h3>
         <div className="flexICenter lg:gap-4 gap-3 flex-wrap mt-4">
@@ -80,7 +89,7 @@ function Catalogue() {
         </div>
       </div>
 
-      {/* Category buttons */}
+      {/* Category filter */}
       <div className="lg:mt-10">
         <h3 className="heading3">Категория:</h3>
         <div className="flexICenter lg:gap-4 gap-3 flex-wrap mt-4">
@@ -91,7 +100,7 @@ function Catalogue() {
                 actorType === option.value
                   ? "bg-primary"
                   : "bg-lightGray text-secondary hover:text-white"
-              } ${option.value === "seriesActors" ? "hidden sm:block" : ""}`}
+              }`}
               onClick={() => setActorType(option.value)}
             >
               {option.label}
@@ -100,7 +109,14 @@ function Catalogue() {
         </div>
       </div>
 
-      <Card data={data} />
+      {/* Actor cards */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <Card data={data} />
+      )}
     </section>
   );
 }

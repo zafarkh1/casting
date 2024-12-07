@@ -14,16 +14,31 @@ export const sendCode = async (email: string) => {
   }
 };
 
-export const getActors = async () => {
+// export const getActors = async () => {
+//   try {
+//     const data = await fetchInstance("/ru/api/v1/actors/list/", {
+//       method: "GET",
+//     });
+//     return {
+//       props: { actors: data.results },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching actors:", error);
+//     return { props: { actors: [] } };
+//   }
+// };
+
+export const getActors = async (filters = {}) => {
   try {
-    const data = await fetchInstance("/ru/api/v1/actors/list/", {
+    const queryParams = new URLSearchParams(filters).toString();
+    const endpoint = `/ru/api/v1/actors/list/?${queryParams}`;
+    const data = await fetchInstance(endpoint, {
       method: "GET",
     });
     return {
       props: { actors: data.results },
     };
   } catch (error) {
-    console.error("Error fetching actors:", error);
     return { props: { actors: [] } };
   }
 };
